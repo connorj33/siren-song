@@ -63,4 +63,26 @@ public class MainActivity extends Activity {
             return rootView;
         }
     }
+
+//    public void record_click(View view) {
+//        onRecord(mStartRecording);
+//        if (mStartRecording) {
+//            view.setText("Stop recording");
+//        } else {
+//            view.setText("Start recording");
+//        }
+//        mStartRecording = !mStartRecording;
+//    }
+//
+//    private void onRecord(boolean start) {
+//        if (start) {
+//            startRecording();
+//        } else {
+//            stopRecording();
+//        }
+//    }
+
+    public void playback_click(View view) {
+
+    }
 }
