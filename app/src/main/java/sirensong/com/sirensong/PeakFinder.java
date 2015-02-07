@@ -2,16 +2,25 @@ package sirensong.com.sirensong;
 
 import org.apache.commons.math3.complex.Complex;
 
+import java.util.LinkedList;
+
 /**
  * A class for finding peaks among an array of values
  */
 public class PeakFinder {
 
-    int scanRange = 1000;
+    int scanRange = 1024;
     double runningTotal;
     double rollingAverage;
+    double[] trimmed;
+    double peakRatioThreshhold = 20;
+    int peakLeft;
+    int peakRight;
+    LinkedList<Integer> peaks;
 
-    public int[] findPeaks(Complex[] input) {
+
+    public Integer[] shear(Complex[] input) {
+        trimmed = new double[input.length];
         int left = 0;
         int right = 1;
         runningTotal = input[0].getReal();
@@ -22,18 +31,96 @@ public class PeakFinder {
             runningTotal += input[right].getReal();
             rollingAverage = runningTotal / right;
             right++;
+            trimBaseline(input, left, right, trimmed);
         }
+        //move the range along
         while (right < input.length) {
             runningTotal += input[right].getReal();
             runningTotal -= input[left].getReal();
             right++;
             left++;
-            rollingAverage = runningTotal;
+            rollingAverage = runningTotal / scanRange;
+            trimBaseline(input, left, right, trimmed);
+        }
+        //shrink it as you get to the end
+        while (left < input.length) {
+            runningTotal -= input[left].getReal();
+            rollingAverage = runningTotal / input.length - left;
+            trimBaseline(input, left, right, trimmed);
+        }
+
+        //at this point, you have the baseline trimmed out, you can do another pass and find ratios.
+        //peaks should be much more obvious.
+        left = 0;
+        right = 1;
+        peakLeft = -1;
+        peakRight = -1;
+        runningTotal = trimmed[0];
+        rollingAverage = runningTotal;
+        peaks = new LinkedList<>();
+
+        while (right < scanRange) {
+            runningTotal += trimmed[right];
+            rollingAverage = runningTotal / right;
+            right++;
+            findPeak(left, right, trimmed);
+        }
+        //move the range along
+        while (right < input.length) {
+            runningTotal += trimmed[right];
+            runningTotal -= trimmed[left];
+            right++;
+            left++;
+            rollingAverage = runningTotal / scanRange;
+            findPeak(left, right, trimmed);
+        }
+        //shrink it as you get to the end
+        while (left < input.length) {
+            runningTotal -= trimmed[left];
+            rollingAverage = runningTotal / input.length - left;
+            findPeak(left, right, trimmed);
         }
 
 
 
-        return null;
+        return peaks.toArray(new Integer[0]);
+    }
+
+    void trimBaseline(Complex[] input, int left, int right, double[] trimmed) {
+        int position = (left-right)/2;
+        double current = input[position].getReal();
+//        double ratio = current/rollingAverage;
+//        if (ratio > 2)
+        if (current < rollingAverage) {
+            trimmed[position] = 0;
+        }
+        else {
+            trimmed[position] = input[position].getReal() - rollingAverage;
+        }
+    }
+
+    void findPeak(int left, int right, double[] trimmed) {
+        int position = (left-right)/2;
+        double current = trimmed[position];
+        double ratio = current/rollingAverage;
+        if (ratio > peakRatioThreshhold) {
+            if (peakLeft == -1) { //not already detecting a peak, start detecting one
+                //peaking = true;
+                peakLeft = position;
+                peakRight = position;
+            }
+            else { //widen the detected peak
+                peakRight = position;
+            }
+        }
+        else {
+            //check if we have just left a peak
+            if (peakRight != 0) {
+                peaks.add((peakRight + peakLeft) / 2);
+                peakLeft = -1;
+                peakRight = -1;
+            }
+        }
     }
 
 }
