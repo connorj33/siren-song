@@ -33,18 +33,20 @@ public class GatherNotes extends Thread {
     private AudioRecord audioRecorder;
     private final Handler mHandler;
     private Runner callback;
-    private Context context;
+//    private Context context;
 
     byte[] processBuffer;
     ArrayList<Note> NoteList;
     private Queue<Freq> freqQueue;
+
+    public volatile boolean isDone = true;
 
     public GatherNotes(Handler mHandler, Runner callback, Context context) {
         this.mHandler = mHandler;
         this.callback = callback;
         audioRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG,
                 ENCODING, SAMPLE_RATE * 6);
-        this.context = context;
+//        this.context = context;
     }
 
     public void run() {
@@ -52,6 +54,7 @@ public class GatherNotes extends Thread {
             Log.v("Uninitialized", "Uninitialized" + 1);
             return; // Do nothing if not initialized
         }
+        isDone = false;
         audioRecorder.startRecording();
         long startTime = System.nanoTime(); //TODO do something with this (give it to Connor)
 
@@ -59,6 +62,9 @@ public class GatherNotes extends Thread {
         byte[] readBuffer = new byte[READ_BUFFER_SIZE];
         processBuffer = new byte[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
         int nextToFillIndex = 0;
+
+        //start Connor's consumer thread
+        new Thread(new Sheep(startTime, this)).start();
 
         while (audioRecorder.read(readBuffer, 0, readBuffer.length) > 0) {
             System.arraycopy(readBuffer, 0, processBuffer, nextToFillIndex * READ_BUFFER_SIZE,
@@ -75,14 +81,6 @@ public class GatherNotes extends Thread {
             }
 
             new Thread(new Worker(processDoubleBuffer, timestamp)).start();
-
-
-
-
-
-
-
-//
         }
     }
 
@@ -122,45 +120,17 @@ public class GatherNotes extends Thread {
             Complex[] intermediate; // = new Complex[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
 
             intermediate = transformer.transform(dArray, TransformType.FORWARD);
-//            try {
-//                File file = new File(context.getFilesDir(), "export.csv");
-//                FileWriter writer = new FileWriter(file);
-//                for (int i = 0; i < intermediate.length; i++) {
-//                    writer.append(i + ",");
-//                    writer.append(Double.toString(intermediate[i].getReal()));
-//                    writer.append('\n');
-//                }
-//                writer.append('\n');
-//                writer.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
             PeakFinder finder = new PeakFinder();
-
             Integer[] found = finder.findPeaks(intermediate);
-//            try {
-//                File notes = new File(context.getFilesDir(), "notes.txt");
-//                FileWriter noteWriter = new FileWriter(notes);
-//                for (int i = 0; i < found.length; i++) {
-//                    noteWriter.append(found[i].toString());
-//                    noteWriter.append("\n");
-//                }
-//                noteWriter.append('\n');
-//                noteWriter.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
             Freq temp = new Freq();
             temp.peaks = found;
             temp.fftResults = intermediate;
             queueFreq(temp);
 
-            if (found.length > 0) {
-                Log.v("Frequencies", found.toString());
-
-            }
+//            if (found.length > 0) {
+//                Log.v("Frequencies", found.toString());
+//
+//            }
         }
     }
 }
