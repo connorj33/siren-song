@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
 //        if (((Button)(view)).getText().equals("Record")) {
             //start recording
             ((Button)view).setText("Stop Recording");
-            gather = new GatherNotes(handle, runner);
+            gather = new GatherNotes(handle, runner, this);
             gather.start();
 //        }
 //        else {
