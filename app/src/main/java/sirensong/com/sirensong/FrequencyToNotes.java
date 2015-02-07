@@ -7,14 +7,21 @@ public class FrequencyToNotes {
 
     private long activeTime;
 
-    private static void getNote(int frequency/*, long time*/) {
+    private static int[] hertzify(int[] input){
+        int[] ret_array = new int[input.length];
+        for(int i = 0; i < 0; i ++){
+            ret_array[i] = (int)(input[i]/2.05);
+        }
+    }
+
+    private static void getNote(int frequency, long time) {
         int octave = 4;                                 //Beginning note in the search is A440, which is in octave 4
         if (frequency >= 856) {                           //If the note is out of the octave, we shift calculations
             octave++;
-            getNote(frequency / 2);
+            getNote(frequency / 2, time);
         } else if (frequency < 440) {                        //Same as adding an octave, but if the note is too low
             octave--;
-            getNote(frequency * 2);
+            getNote(frequency * 2, time);
         }
         double curr_freq = 428;                         //Starting pitch
         int notesPastA = 0;
