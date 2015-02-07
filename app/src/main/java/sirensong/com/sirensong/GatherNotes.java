@@ -86,8 +86,9 @@ public class GatherNotes extends Thread {
                 e.printStackTrace();
             }
 
-            if (currentFrequency > 0) {
+            if (found.length > 0) {
                 Log.v("Frequencies", found.toString());
+                callback.ints = found;
                 mHandler.post(callback);
             }
         }
