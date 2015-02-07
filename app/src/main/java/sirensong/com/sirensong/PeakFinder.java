@@ -124,32 +124,38 @@ public class PeakFinder {
 //    }
 
     double posThresh = 20000000;
-    double negThresh = 20000000;
+    double negThresh = -20000000;
 
     int peakLeft = -1;
     int peakRight = -1;
+
+    int fuzzer = 75;
 
     public Integer[] findPeaks(Complex[] fft) {
         LinkedList<Integer> peaks = new LinkedList<>();
         for (int i = 0; i < fft.length /2; i++) {
             if (fft[i].getReal() > posThresh || fft[i].getReal() < negThresh) {
                 if (peakLeft == -1) { //not already detecting a peak, start detecting one
-                //peaking = true;
-                peakLeft = i;
-                peakRight = i;
+                    peakLeft = i;
+                    peakRight = i;
+                    fuzzer = 75;
+                }
+                else { //widen the detected peak
+                    peakRight = i;
+                }
             }
-            else { //widen the detected peak
-                peakRight = i;
-            }
-        }
-        else {
-            //check if we have just left a peak
-            if (peakRight != -1) {
-                peaks.add((peakRight + peakLeft) / 2);
-                peakLeft = -1;
-                peakRight = -1;
-            }
-
+            else {
+                //check if we have just left a peak
+                if (peakRight != -1) {
+                    if (fuzzer > 0) {
+                        fuzzer--;
+                    }
+                    else {
+                        peaks.add((peakRight + peakLeft) / 2);
+                        peakLeft = -1;
+                        peakRight = -1;
+                    }
+                }
             }
         }
         return peaks.toArray(new Integer[0]);

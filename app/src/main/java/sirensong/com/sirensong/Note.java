@@ -9,7 +9,7 @@ public class Note {
     private long startTime;
     private long endTime;
     private long duration;
-    private boolean complete = False;
+    private boolean complete = false;
     //quarter, whole, half, eight note?
 
 

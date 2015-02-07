@@ -85,11 +85,13 @@ public class GatherNotes extends Thread {
 
             PeakFinder finder = new PeakFinder();
 
-            Integer[] found = finder.shear(intermediate);
+            Integer[] found = finder.findPeaks(intermediate);
             try {
-                FileWriter noteWriter = new FileWriter("notes.txt");
-                for (int i = 0; i > found.length; i++) {
+                File notes = new File(context.getFilesDir(), "notes.txt");
+                FileWriter noteWriter = new FileWriter(notes);
+                for (int i = 0; i < found.length; i++) {
                     noteWriter.append(found[i].toString());
+                    noteWriter.append("\n");
                 }
                 noteWriter.append('\n');
                 noteWriter.close();
