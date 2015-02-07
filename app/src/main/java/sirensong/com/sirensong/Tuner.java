@@ -12,7 +12,7 @@ import org.apache.commons.math3.transform.*;
 public class Tuner extends Thread {
 
 
-    private FastFourierTransformer transformer = FastFourierTransformer(STANDARD);
+    private FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
     public double currentFrequency = 0.0;
     private static final int SAMPLE_RATE = 44100;
     private static final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
