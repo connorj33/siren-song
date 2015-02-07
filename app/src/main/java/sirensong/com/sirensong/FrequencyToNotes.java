@@ -8,6 +8,7 @@ public class FrequencyToNotes {
     private static final String[] notes = {"A ", "A sharp ", "B ", "C ", "C sharp ", "D ",
             "D sharp ", "E ", "F ", "F sharp ", "G ", "G sharp " };
 
+
     private static String getNote(int frequency){
         int octave = 4;                                 //Beginning note in the search is A440, which is in octave 4
         if(frequency >= 880){                           //If the note is out of the octave, we shift calculations

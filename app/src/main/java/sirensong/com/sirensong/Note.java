@@ -29,5 +29,5 @@ public class Note {
 
     //create time becomes start time if there isn't another incomplete note of the same pitch, and becomes end time if there is.
     //if a third note of the same pitch arrives before the timeout, the second one gets dropped.  after the timeout, the first and last are combined
-    
+
 }
