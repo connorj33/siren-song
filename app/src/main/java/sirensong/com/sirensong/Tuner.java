@@ -4,6 +4,8 @@ import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
+
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.*;
 
 /**
@@ -37,7 +39,10 @@ public class Tuner extends Thread {
         audioRecorder.startRecording();
         byte[] readBuffer = new byte[READ_BUFFER_SIZE];
         byte[] processBuffer = new byte[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
+        double[] processDoubleBuffer = new double[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
+        Complex[] intermediate = new Complex[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
         int nextToFillIndex = 0;
+
 
         while (audioRecorder.read(readBuffer, 0, readBuffer.length) > 0) {
             System.arraycopy(readBuffer, 0, processBuffer, nextToFillIndex * READ_BUFFER_SIZE,
@@ -45,7 +50,16 @@ public class Tuner extends Thread {
             nextToFillIndex++;
             nextToFillIndex %= PROCESS_BUFFER_SIZE;
 
-            currentFrequency = 0;//DOSOMETHINGHEREKINDALIKETHEFFTTHATSTEPHENISDOING
+            for(int i = 0; i > PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE; i++){
+                processDoubleBuffer[i] = processBuffer[i];
+            }
+
+            intermediate = transformer.transform(processDoubleBuffer, TransformType.FORWARD);
+
+
+            //currentFrequency
+
+
 
             if (currentFrequency > 0) {
                 mHandler.post(callback);
