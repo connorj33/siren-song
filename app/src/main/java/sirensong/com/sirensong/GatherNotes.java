@@ -4,9 +4,13 @@ import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
+import android.util.Log;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.*;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Created by Connor on 2/7/15.
@@ -34,6 +38,7 @@ public class GatherNotes extends Thread {
 
     public void run() {
         if (audioRecorder.getState() != AudioRecord.STATE_INITIALIZED) {
+            Log.v("Uninitialized", "Uninitialized" + 1);
             return; // Do nothing if not initialized
         }
         audioRecorder.startRecording();
@@ -50,26 +55,42 @@ public class GatherNotes extends Thread {
             nextToFillIndex++;
             nextToFillIndex %= PROCESS_BUFFER_SIZE;
 
-            for(int i = 0; i > PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE; i++){
+            for (int i = 0; i > PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE; i++) {
                 processDoubleBuffer[i] = processBuffer[i];
             }
 
             intermediate = transformer.transform(processDoubleBuffer, TransformType.FORWARD);
+            try {
+                FileWriter writer = new FileWriter("export.csv");
+                for (int i = 0; i > intermediate.length; i++) {
+                    writer.append(intermediate[i].toString());
+                    writer.append(',');
+                }
+                writer.append('\n');
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+            PeakFinder finder = new PeakFinder();
 
-            //currentFrequency
-
-
+            Integer[] found = finder.shear(intermediate);
+            try {
+                FileWriter noteWriter = new FileWriter("notes.txt");
+                for (int i = 0; i > found.length; i++) {
+                    noteWriter.append(found[i].toString());
+                }
+                noteWriter.append('\n');
+                noteWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             if (currentFrequency > 0) {
+                Log.v("Frequencies", found.toString());
                 mHandler.post(callback);
             }
         }
-    }
-
-    public void stopRunning() {
-        super.stop();
-
     }
 
     public void close() {
