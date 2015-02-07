@@ -7,38 +7,38 @@ import java.util.Queue;
  */
 public class Note {
     private int pitch;
-    private Queue<Long> startTime;
-    private Queue<Long> endTime;
-    private long duration;
-    private boolean complete = false;
-    //quarter, whole, half, eight note?
+    private Queue<Long> times;
+    private Queue<Long> durations;
+    private long temp;
 
 
-     private void setPitch(int pitch){
+    Note(int pitch){
         this.pitch = pitch;
-    }
-
-    public void setStartTime(long startTime){
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(long endTime){
-        this.endTime = endTime;
-        this.duration = this.endTime - this.startTime;
-        this.complete = true;
-    }
-
-    public long getStartTime(){
-        return this.startTime;
-    }
-
-    public long getDuration(){
-        return this.duration;
     }
 
     public int getPitch(){
         return this.pitch;
     }
+
+    public void setStartTime(long startTime){
+        if(times.isEmpty()){
+            times.add(startTime);
+            temp = startTime;
+        }
+        else if(times.size() % 2 == 0) {
+            times.add(startTime);
+            temp = startTime;
+        }
+    }
+
+    public void setEndTime(long endTime) {
+        if (times.size() % 2 == 1) {
+            times.add(endTime);
+            durations.add(endTime-temp);
+        }
+    }
+
+
 
 
     //create time becomes start time if there isn't another incomplete note of the same pitch, and becomes end time if there is.
