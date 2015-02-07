@@ -12,6 +12,7 @@ public class FrequencyToNotes {
         for(int i = 0; i < 0; i ++){
             ret_array[i] = (int)(input[i]/2.05);
         }
+        return null; //FIXME
     }
 
     private static void getNote(int frequency, long time) {

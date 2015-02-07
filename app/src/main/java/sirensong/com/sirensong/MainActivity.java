@@ -16,6 +16,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
     GatherNotes gather;
+    boolean recording = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,42 +72,17 @@ public class MainActivity extends Activity {
     }
 
     public void recordClick(View view) {
-//        if (((Button)(view)).getText().equals("Record")) {
-        //start recording
-        ((Button)view).setText("Stop Recording");
-        gather = new GatherNotes(handle, runner, this);
-        gather.start();
-//        }
-//        else {
-//            //stop recording
-//            ((Button)view).setText("Record");
-//            if (gather != null) {
-//                gather.close();
-//            }
-//        }
-    }
-
-    Handler handle = new Handler() {
-
-    };
-
-
-    Runner runner = new Runner();
-
-
-
-//
-//    private void onRecord(boolean start) {
-//        if (start) {
-//            startRecording();
-//        } else {
-//            stopRecording();
-//        }
-//    }
-
-    public void playback_click(View view) {
-        if (gather != null) {
-            gather.close();
+        if (recording) {
+            if (gather != null) {
+                gather.close();
+                ((Button) view).setText("Record");
+                recording = false;
+            }
+        } else {
+            ((Button) view).setText("Stop Recording");
+            gather = new GatherNotes();
+            gather.start();
+            recording = true;
         }
     }
 }
