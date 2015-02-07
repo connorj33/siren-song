@@ -72,10 +72,10 @@ public class MainActivity extends Activity {
 
     public void recordClick(View view) {
 //        if (((Button)(view)).getText().equals("Record")) {
-            //start recording
-            ((Button)view).setText("Stop Recording");
-            gather = new GatherNotes(handle, runner, this);
-            gather.start();
+        //start recording
+        ((Button)view).setText("Stop Recording");
+        gather = new GatherNotes(handle, runner, this);
+        gather.start();
 //        }
 //        else {
 //            //stop recording
@@ -105,6 +105,8 @@ public class MainActivity extends Activity {
 //    }
 
     public void playback_click(View view) {
-
+        if (gather != null) {
+            gather.close();
+        }
     }
 }
