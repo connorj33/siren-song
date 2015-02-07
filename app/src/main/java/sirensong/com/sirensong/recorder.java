@@ -7,7 +7,7 @@ import android.util.Log;
 import java.io.IOException;
 
 /**
- * Created by Stephen on 2/7/2015.
+ * Interface for recording audio into a file and playing it back.
  */
 public class recorder {
     //adapted from here: http://developer.android.com/guide/topics/media/audio-capture.html
@@ -15,14 +15,14 @@ public class recorder {
     private static final String LOG_TAG = "AudioRecorder";
 
     private MediaPlayer   mPlayer = null;
-    private static String mFileName = null;
+    //private static String mFileName = null;
     private MediaRecorder mRecorder = null;
 
 
-    private void startPlaying() {
+    private void startPlaying(String fileName) {
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(mFileName);
+            mPlayer.setDataSource(fileName);
             mPlayer.prepare();
             mPlayer.start();
         } catch (IOException e) {
@@ -35,11 +35,11 @@ public class recorder {
         mPlayer = null;
     }
 
-    private void startRecording() {
+    private void startRecording(String fileName) {
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
+        mRecorder.setOutputFile(fileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
