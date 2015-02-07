@@ -1,30 +1,44 @@
 package sirensong.com.sirensong;
 
+import java.util.Queue;
+
 /**
  * Created by Connor on 2/7/15.
  */
 public class Note {
     private int pitch;
-    private long createTime;
-    private long startTime;
-    private long endTime;
+    private Queue<Long> startTime;
+    private Queue<Long> endTime;
     private long duration;
     private boolean complete = false;
     //quarter, whole, half, eight note?
 
 
-    Note(int pitch){
+     private void setPitch(int pitch){
         this.pitch = pitch;
     }
 
-    Note(int pitch, long startTime, long endTime){
-        this.pitch = pitch;
+    public void setStartTime(long startTime){
         this.startTime = startTime;
-        this.endTime = endTime;
-        this.duration = endTime - startTime;
     }
 
+    public void setEndTime(long endTime){
+        this.endTime = endTime;
+        this.duration = this.endTime - this.startTime;
+        this.complete = true;
+    }
 
+    public long getStartTime(){
+        return this.startTime;
+    }
+
+    public long getDuration(){
+        return this.duration;
+    }
+
+    public int getPitch(){
+        return this.pitch;
+    }
 
 
     //create time becomes start time if there isn't another incomplete note of the same pitch, and becomes end time if there is.
