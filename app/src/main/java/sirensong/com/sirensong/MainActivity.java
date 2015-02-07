@@ -4,15 +4,18 @@ package sirensong.com.sirensong;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Button;
 
 
 public class MainActivity extends Activity {
+    GatherNotes gather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +67,27 @@ public class MainActivity extends Activity {
         }
     }
 
-//    public void record_click(View view) {
-//        onRecord(mStartRecording);
-//        if (mStartRecording) {
-//            view.setText("Stop recording");
-//        } else {
-//            view.setText("Start recording");
-//        }
-//        mStartRecording = !mStartRecording;
-//    }
+    public void record_click(View view) {
+        if (((Button)(view)).getText().equals("Record")) {
+            //start recording
+            ((Button)view).setText("Stop Recording");
+            gather = new GatherNotes(handle, runner);
+            gather.start();
+        }
+        else {
+            //stop recording
+            ((Button)view).setText("Record");
+            gather.close();
+        }
+    }
+
+    Handler handle = new Handler() {
+
+    };
+
+
+    Runner runner = new Runner();
+
 //
 //    private void onRecord(boolean start) {
 //        if (start) {

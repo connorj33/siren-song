@@ -23,9 +23,9 @@ public class GatherNotes extends Thread {
     private static final int PROCESS_BUFFER_SIZE = 4;
     private AudioRecord audioRecorder;
     private final Handler mHandler;
-    private Runnable callback;
+    private Runner callback;
 
-    public GatherNotes(Handler mHandler, Runnable callback) {
+    public GatherNotes(Handler mHandler, Runner callback) {
         this.mHandler = mHandler;
         this.callback = callback;
         audioRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG,
