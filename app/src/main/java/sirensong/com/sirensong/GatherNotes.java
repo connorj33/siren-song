@@ -11,7 +11,7 @@ import org.apache.commons.math3.transform.*;
 /**
  * Created by Connor on 2/7/15.
  */
-public class Tuner extends Thread {
+public class GatherNotes extends Thread {
 
 
     private FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
@@ -25,7 +25,7 @@ public class Tuner extends Thread {
     private final Handler mHandler;
     private Runnable callback;
 
-    public Tuner(Handler mHandler, Runnable callback) {
+    public GatherNotes(Handler mHandler, Runnable callback) {
         this.mHandler = mHandler;
         this.callback = callback;
         audioRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG,
