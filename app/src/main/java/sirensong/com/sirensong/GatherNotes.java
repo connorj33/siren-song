@@ -31,9 +31,6 @@ public class GatherNotes extends Thread {
     private static final int READ_BUFFER_SIZE = 16 * 1024;
     private static final int PROCESS_BUFFER_SIZE = 4;
     private AudioRecord audioRecorder;
-    private final Handler mHandler;
-    private Runner callback;
-//    private Context context;
 
     byte[] processBuffer;
     ArrayList<Note> NoteList;
@@ -41,12 +38,9 @@ public class GatherNotes extends Thread {
 
     public volatile boolean isDone = true;
 
-    public GatherNotes(Handler mHandler, Runner callback, Context context) {
-        this.mHandler = mHandler;
-        this.callback = callback;
+    public GatherNotes() {
         audioRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG,
                 ENCODING, SAMPLE_RATE * 6);
-//        this.context = context;
     }
 
     public void run() {
@@ -56,7 +50,7 @@ public class GatherNotes extends Thread {
         }
         isDone = false;
         audioRecorder.startRecording();
-        long startTime = System.nanoTime(); //TODO do something with this (give it to Connor)
+        long startTime = System.nanoTime();
 
         freqQueue = new LinkedList<>();
         byte[] readBuffer = new byte[READ_BUFFER_SIZE];
@@ -88,6 +82,7 @@ public class GatherNotes extends Thread {
         if (audioRecorder.getState() == AudioRecord.STATE_INITIALIZED) {
             audioRecorder.stop();
             audioRecorder.release();
+            isDone = true;
             Log.v("Frequencies", "closed the thing");
         }
     }
