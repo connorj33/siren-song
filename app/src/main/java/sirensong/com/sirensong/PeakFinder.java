@@ -131,9 +131,11 @@ public class PeakFinder {
 
     int fuzzer = 75;
 
+    int HighPass = 170; //no peaks below this allowed. There is no reason to need them.
+
     public Integer[] findPeaks(Complex[] fft) {
         LinkedList<Integer> peaks = new LinkedList<>();
-        for (int i = 0; i < fft.length /2; i++) {
+        for (int i = HighPass; i < fft.length /2; i++) {
             if (fft[i].getReal() > posThresh || fft[i].getReal() < negThresh) {
                 if (peakLeft == -1) { //not already detecting a peak, start detecting one
                     peakLeft = i;
