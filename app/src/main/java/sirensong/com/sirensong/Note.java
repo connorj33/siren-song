@@ -9,7 +9,7 @@ public class Note {
     private int pitch;
     private Queue<Long> times;
     private Queue<Long> durations;
-    private long temp;
+
 
 
     Note(int pitch){
@@ -20,28 +20,13 @@ public class Note {
         return this.pitch;
     }
 
-    public void setStartTime(long startTime){
+    public void setTime(long time){
         if(times.isEmpty()){
-            times.add(startTime);
-            temp = startTime;
+            times.add(time);
         }
+
         else if(times.size() % 2 == 0) {
-            times.add(startTime);
-            temp = startTime;
+            times.add(time);
         }
     }
-
-    public void setEndTime(long endTime) {
-        if (times.size() % 2 == 1) {
-            times.add(endTime);
-            durations.add(endTime-temp);
-        }
-    }
-
-
-
-
-    //create time becomes start time if there isn't another incomplete note of the same pitch, and becomes end time if there is.
-    //if a third note of the same pitch arrives before the timeout, the second one gets dropped.  after the timeout, the first and last are combined
-
 }

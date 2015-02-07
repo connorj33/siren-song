@@ -9,4 +9,12 @@ public class Freq {
     public Integer[] peaks;
     public Complex[] fftResults;
     public long timeStamp;
+
+    public int numPeaks(Integer[] peaks){
+        return peaks.length;
+    }
+
+    public long getTimeStamp(){
+        return  this.timeStamp;
+    }
 }

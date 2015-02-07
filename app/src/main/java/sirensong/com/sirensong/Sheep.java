@@ -1,11 +1,14 @@
 package sirensong.com.sirensong;
 
+import java.util.ArrayList;
+
 /**
  * Created by test on 2/7/2015.
  */
 public class Sheep implements Runnable {
     long startTime;
     GatherNotes gather;
+    Note[] noteList;
 
     Sheep(long startTime, GatherNotes gather) {
         this.startTime = startTime;
@@ -29,7 +32,12 @@ public class Sheep implements Runnable {
                 }
             }
             else {
-                //you have a freq to work with, do shit with it.
+                FrequencyToNotes ftn = new FrequencyToNotes();
+                int[] newArray = ftn.hertzify(currentFreq.peaks);
+                for(int i = 0; i < newArray.length; i++){
+                    ftn.getNote(newArray[i],currentFreq.timeStamp,noteList, ftn.oldFrequencies );
+                }
+                ftn.holdover(ftn.oldFrequencies);
                 //TODO YOUR CODE HERE (possibly in another thread?)
 
 
