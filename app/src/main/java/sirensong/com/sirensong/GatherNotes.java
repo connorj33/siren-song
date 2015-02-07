@@ -48,7 +48,10 @@ public class GatherNotes extends Thread {
         audioRecorder.startRecording();
         byte[] readBuffer = new byte[READ_BUFFER_SIZE];
         byte[] processBuffer = new byte[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
+
+
         double[] processDoubleBuffer = new double[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE / 2];
+
         Complex[] intermediate = new Complex[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
         int nextToFillIndex = 0;
 
@@ -59,9 +62,7 @@ public class GatherNotes extends Thread {
             nextToFillIndex++;
             nextToFillIndex %= PROCESS_BUFFER_SIZE;
 
-//            for (int i = 0; i < PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE; i++) {
-//                processDoubleBuffer[i] = (double) processBuffer[i];
-//            }
+
             for (int i = 0, j = 0; i != processDoubleBuffer.length; ++i, j += 2) {
                 processDoubleBuffer[i] = (double)( (processBuffer[j  ] & 0xff) |
                         ((processBuffer[j+1] & 0xff) <<  8) );
