@@ -34,9 +34,10 @@ public class FrequencyToNotes {
 
             }
         }
-        for(int i = 32; i < 88; i ++){
-            if(((Note)noteList.get()).getPitch() == i)   {
-                noteList.get().setStartTime(time)
+        for(int i = 32; i < 88; i ++) {
+//            if (((Note) noteList.get()).getPitch() == i) {
+//                noteList.get().setStartTime(time);
+//            }
         }
         //search for note based on id number, then add start if possible, add starting to time to list
     }
