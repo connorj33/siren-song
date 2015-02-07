@@ -82,11 +82,7 @@ public class GatherNotes extends Thread {
 
 
 
-//            if (found.length > 0) {
-//                Log.v("Frequencies", found.toString());
-//                callback.ints = found;
-//                mHandler.post(callback);
-//            }
+//
         }
     }
 
@@ -94,7 +90,7 @@ public class GatherNotes extends Thread {
         if (audioRecorder.getState() == AudioRecord.STATE_INITIALIZED) {
             audioRecorder.stop();
             audioRecorder.release();
-//            Log.v("Frequencies", "closed the thing");
+            Log.v("Frequencies", "closed the thing");
         }
     }
 
@@ -161,6 +157,10 @@ public class GatherNotes extends Thread {
             temp.fftResults = intermediate;
             queueFreq(temp);
 
+            if (found.length > 0) {
+                Log.v("Frequencies", found.toString());
+
+            }
         }
     }
 }

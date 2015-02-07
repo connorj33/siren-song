@@ -7,7 +7,7 @@ public class FrequencyToNotes {
 
     private long activeTime;
 
-    private static void getNote(int frequency, long time) {
+    private static void getNote(int frequency/*, long time*/) {
         int octave = 4;                                 //Beginning note in the search is A440, which is in octave 4
         if (frequency >= 856) {                           //If the note is out of the octave, we shift calculations
             octave++;
@@ -27,9 +27,10 @@ public class FrequencyToNotes {
 
             }
         }
-        for(int i = 32; i < 88; i ++){
-            if(((Note)noteList.get()).getPitch() == i)   {
-                noteList.get().setStartTime(time)
+        for(int i = 32; i < 88; i ++) {
+//            if (((Note) noteList.get()).getPitch() == i) {
+//                noteList.get().setStartTime(time);
+//            }
         }
         //search for note based on id number, then add start if possible, add starting to time to list
     }
