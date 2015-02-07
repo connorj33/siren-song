@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+
         public PlaceholderFragment() {
         }
 
@@ -65,20 +66,24 @@ public class MainActivity extends Activity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
+
+
     }
 
-    public void record_click(View view) {
-        if (((Button)(view)).getText().equals("Record")) {
+    public void recordClick(View view) {
+//        if (((Button)(view)).getText().equals("Record")) {
             //start recording
             ((Button)view).setText("Stop Recording");
             gather = new GatherNotes(handle, runner);
             gather.start();
-        }
-        else {
-            //stop recording
-            ((Button)view).setText("Record");
-            gather.close();
-        }
+//        }
+//        else {
+//            //stop recording
+//            ((Button)view).setText("Record");
+//            if (gather != null) {
+//                gather.close();
+//            }
+//        }
     }
 
     Handler handle = new Handler() {
@@ -87,6 +92,8 @@ public class MainActivity extends Activity {
 
 
     Runner runner = new Runner();
+
+
 
 //
 //    private void onRecord(boolean start) {

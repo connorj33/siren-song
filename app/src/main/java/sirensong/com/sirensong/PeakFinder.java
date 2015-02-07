@@ -87,7 +87,7 @@ public class PeakFinder {
     }
 
     void trimBaseline(Complex[] input, int left, int right, double[] trimmed) {
-        int position = (left-right)/2;
+        int position = (right+left)/2;
         double current = input[position].getReal();
 //        double ratio = current/rollingAverage;
 //        if (ratio > 2)
@@ -100,7 +100,7 @@ public class PeakFinder {
     }
 
     void findPeak(int left, int right, double[] trimmed) {
-        int position = (left-right)/2;
+        int position = (right+left)/2;
         double current = trimmed[position];
         double ratio = current/rollingAverage;
         if (ratio > peakRatioThreshhold) {
