@@ -54,7 +54,7 @@ public class Sheep implements Runnable {
             }
         }
         //following the loop, sheep has one last task: getting rid of transient notes and gaps in noteList.
-        //clean(noteList);
+        clean(noteList);
         try {
             new MidiMaker(this).makeMidi();
         } catch (IOException e) {
@@ -63,8 +63,8 @@ public class Sheep implements Runnable {
     }
 
     private void clean(Note[] noteList) {
-        int noteMinLength = 50;
-        int gapMinLength = 50;
+        int noteMinLength = 5000000;
+        int gapMinLength =  5000000;
 
         //get rid of gaps first:
         for (Note n: noteList) {
