@@ -1,7 +1,11 @@
 package sirensong.com.sirensong;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -25,13 +29,13 @@ public class MidiMaker{
     TimeSignature signature = new TimeSignature(0 ,0 , 4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
     Tempo tempo =new Tempo();
 
-    public void makeMidi(){
+    public void makeMidi() throws IOException {
 
         tempoTrack.insertEvent(signature);
         float rate = determineTempo(durations);
         tempo.setBpm(rate);
         tempoTrack.insertEvent(tempo);
-        midisheep("save");
+        midisheep();
     }
 
     public LinkedList<Long> extractAndMidifyNotes() {
@@ -42,11 +46,15 @@ public class MidiMaker{
 
 
         for (int i = 0; i < bessie.noteList.length; i++) {
-            for (int j = 0; j < bessie.noteList[i].times.size(); j++) {
-                pitch = bessie.noteList[i].getPitch();
-                noteTrack.insertNote(channel, pitch, velocity, 0, bessie.noteList[i].durations.element());
-                durations.add(bessie.noteList[i].durations.element());
-
+            try {
+                for (int j = 0; j < bessie.noteList[i].times.size(); j++) {
+                    pitch = bessie.noteList[i].getPitch();
+                    noteTrack.insertNote(channel, pitch, velocity, 0, bessie.noteList[i].durations.element());
+                    durations.add(bessie.noteList[i].durations.element());
+                }
+            }
+            catch(NullPointerException e){
+                e.printStackTrace();
             }
         }
         return durations;
@@ -73,7 +81,7 @@ public class MidiMaker{
         return (double) (average / data.length);
     }
 
-    public void midisheep(String filename) {
+    public void midisheep() throws IOException {
         ArrayList<MidiTrack> tracks = new ArrayList<>();
 
           tracks.add(tempoTrack);
@@ -84,15 +92,9 @@ public class MidiMaker{
         MidiFile midi = new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
 
         // 4. Write the MIDI data to a file
-        File output = new File(filename);
-        try
-        {
-            midi.writeToFile(output);
-        }
-        catch(IOException e)
-        {
-            System.err.println(e);
-        }
+        File midisave = new File("save.mid");
+        midi.writeToFile(midisave);
+
     }
 }
 
