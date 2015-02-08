@@ -22,12 +22,9 @@ public class Note {
     }
 
     public void setTime(long time){
-        if(times.isEmpty()){
-            times.add(time);
-        }
-
-        else if(times.size() % 2 == 0) {
-            times.add(time);
+        times.add(time);
+        if(times.size() % 2 == 0) {
+            durations.add(time-times.peek());
         }
     }
 }
