@@ -13,27 +13,24 @@ import com.leff.midi.event.meta.TimeSignature;
 /**
  * Created by Connor on 2/8/15.
  */
-public class MidiMaker implements Runnable{
+public class MidiMaker{
     Sheep bessie;
-    public MidiMaker(long startTime, GatherNotes gather) throws IOException {
+    public MidiMaker(long startTime, GatherNotes gather, Sheep bessie) throws IOException {
 
-        bessie = new Sheep(startTime, gather);
-        new Thread(bessie).start();
     }
+
+    LinkedList<Long> durations = extractAndMidifyNotes();
     MidiTrack tempoTrack = new MidiTrack();
     MidiTrack noteTrack = new MidiTrack();
     TimeSignature signature = new TimeSignature(0 ,0 , 4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
+    Tempo tempo =new Tempo();
 
+    public void makeMidi(){
 
-    public void run() {
-        //start bessie
-
-        LinkedList<Long> durations = extractAndMidifyNotes();
-        Tempo tempo =new Tempo();
+        tempoTrack.insertEvent(signature);
         float rate = determineTempo(durations);
         tempo.setBpm(rate);
         tempoTrack.insertEvent(tempo);
-        tempoTrack.insertEvent(signature);
         midisheep("save");
     }
 
