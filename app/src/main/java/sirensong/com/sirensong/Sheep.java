@@ -17,30 +17,11 @@ public class Sheep implements Runnable {
         this.gather = gather;
     }
 
-    public Note[] getAllNotes(){
-
-    }
-
-    public int getNotePitch(Note a){
-        return a.getPitch();
-    }
-
-    public long[] getStartingTimes(Note a){
-        long startTimes[] = new long[a.times.size()/2];
-        for (int i = 0; i < a.times.size()/2; i++) {
-            startTimes[i] = a.times[2*i];
-        }
-    }
-
-    public long[] get_durations(Note a){
-        return a.durations[];
-    }
-
 
     @Override
     public void run() {
         for(int i = 0; i < noteList.length; i++){
-            noteList[i] = new Note((int)27.5 *((2^(1/12))^i));
+            noteList[i] = new Note((int)(27.5 *((Math.pow(2,Math.pow((1/12),i))))));
         }
         Freq currentFreq;
         while (true) {
@@ -59,8 +40,8 @@ public class Sheep implements Runnable {
             else {
                 FrequencyToNotes ftn = new FrequencyToNotes();
                 int[] newArray = ftn.hertzify(currentFreq.peaks);
-                for(int i = 0; i < newArray.length; i++){
-                    ftn.getNote(newArray[i],currentFreq.timeStamp,noteList, ftn.oldFrequencies, 4);
+                for (int aNewArray : newArray) {
+                    FrequencyToNotes.getNote(aNewArray, currentFreq.timeStamp, noteList, ftn.oldFrequencies, 4);
                 }
                 ftn.holdover(ftn.oldFrequencies);
             }
