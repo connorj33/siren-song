@@ -82,7 +82,7 @@ public class MidiMaker{
         for (long aData : data) {
             average += aData;
         }
-            return (double) (average / (data.length+1);
+            return (double) (average / (data.length+1));
     }
 
     public void midisheep() throws IOException {
