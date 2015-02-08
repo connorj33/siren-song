@@ -8,11 +8,10 @@ import java.util.Queue;
  */
 public class Note {
     private int pitch;
+
     Queue<Long> times = new LinkedList<Long>() {
     };
-    Queue<Long> durations;
-
-
+    Queue<Long> durations = new LinkedList<>();
 
     Note(int pitch){
         this.pitch = pitch;
@@ -23,12 +22,9 @@ public class Note {
     }
 
     public void setTime(long time){
-        if(times.isEmpty()){
-            times.add(time);
-        }
-
-        else if(times.size() % 2 == 0) {
-            times.add(time);
+        times.add(time);
+        if(times.size() % 2 == 0) {
+            durations.add(time-times.peek());
         }
     }
 }

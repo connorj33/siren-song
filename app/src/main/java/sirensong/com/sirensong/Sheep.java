@@ -17,6 +17,26 @@ public class Sheep implements Runnable {
         this.gather = gather;
     }
 
+    public Note[] getAllNotes(){
+
+    }
+
+    public int getNotePitch(Note a){
+        return a.getPitch();
+    }
+
+    public long[] getStartingTimes(Note a){
+        long startTimes[] = new long[a.times.size()/2];
+        for (int i = 0; i < a.times.size()/2; i++) {
+            startTimes[i] = a.times[2*i];
+        }
+    }
+
+    public long[] get_durations(Note a){
+        return a.durations[];
+    }
+
+
     @Override
     public void run() {
         for(int i = 0; i < noteList.length; i++){

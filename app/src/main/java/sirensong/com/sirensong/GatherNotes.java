@@ -31,7 +31,6 @@ public class GatherNotes extends Thread {
     private AudioRecord audioRecorder;
 
     byte[] processBuffer;
-    ArrayList<Note> NoteList;
     private Queue<Freq> freqQueue;
 
     public volatile boolean isDone = true;
@@ -56,7 +55,7 @@ public class GatherNotes extends Thread {
         int nextToFillIndex = 0;
 
         //start Connor's consumer thread
-        new Thread(new Sheep(startTime, this)).start();
+        new Thread(new MidiMaker(startTime, this)).start();
 
         while (audioRecorder.read(readBuffer, 0, readBuffer.length) > 0) {
             System.arraycopy(readBuffer, 0, processBuffer, nextToFillIndex * READ_BUFFER_SIZE,
