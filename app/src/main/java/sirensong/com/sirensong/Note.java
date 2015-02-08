@@ -1,7 +1,6 @@
 package sirensong.com.sirensong;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -9,98 +8,9 @@ import java.util.Queue;
  */
 public class Note {
     private int pitch;
-    private Queue<Long> times = new Queue<Long>() {
-        @Override
-        public boolean add(Long aLong) {
-            return false;
-        }
-
-        @Override
-        public boolean offer(Long aLong) {
-            return false;
-        }
-
-        @Override
-        public Long remove() {
-            return null;
-        }
-
-        @Override
-        public Long poll() {
-            return null;
-        }
-
-        @Override
-        public Long element() {
-            return null;
-        }
-
-        @Override
-        public Long peek() {
-            return null;
-        }
-
-        @Override
-        public boolean addAll(Collection<? extends Long> collection) {
-            return false;
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public boolean contains(Object object) {
-            return false;
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> collection) {
-            return false;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public Iterator<Long> iterator() {
-            return null;
-        }
-
-        @Override
-        public boolean remove(Object object) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> collection) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(Collection<?> collection) {
-            return false;
-        }
-
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public Object[] toArray() {
-            return new Object[0];
-        }
-
-        @Override
-        public <T> T[] toArray(T[] array) {
-            return null;
-        }
+    Queue<Long> times = new LinkedList<Long>() {
     };
-    private Queue<Long> durations;
+    Queue<Long> durations;
 
 
 
