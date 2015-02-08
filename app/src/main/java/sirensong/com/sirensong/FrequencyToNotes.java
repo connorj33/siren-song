@@ -8,14 +8,24 @@ import android.util.Log;
 public class FrequencyToNotes {
 
     public int[] oldFrequencies = {0};
+    public int[] tones;
 
-
-    public static int[] hertzify(Integer[] input) {
+    public int[] hertzify(Integer[] input) {
+        int tones_count = 0;
         int[] ret_array = new int[input.length];
         for (int i = 0; i < input.length; i++) {
             ret_array[i] = (int) (input[i] / 2.05);
+
         }
-        return ret_array;
+        for(int i = ret_array.length; i > 0; i --){
+            for(int j = ret_array.length-i; j > 0; j --){
+                if(!(ret_array[i] > ret_array[j]*.95 && ret_array[i] < ret_array[j]* 1.05)){
+                    tones[tones_count] = ret_array[i];
+                    tones_count ++;
+                }
+            }
+        }
+        return tones;
     }
 
     public void holdover(int[] oldFrequencies) {
