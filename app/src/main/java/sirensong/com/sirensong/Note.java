@@ -9,7 +9,7 @@ import java.util.Queue;
  */
 public class Note {
     private int pitch;
-    private Queue<Long> times = new Queue<Long>() {
+    public Queue<Long> times = new Queue<Long>() {
         @Override
         public boolean add(Long aLong) {
             return false;
@@ -100,7 +100,8 @@ public class Note {
             return null;
         }
     };
-    private Queue<Long> durations;
+
+    public  Queue<Long> durations;
 
 
 
