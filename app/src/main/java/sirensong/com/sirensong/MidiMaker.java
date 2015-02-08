@@ -93,9 +93,7 @@ public class MidiMaker{
 
 
         MidiFile midi = new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
-
-        // 4. Write the MIDI data to a file
-        File midisave = new File("save.mid");
+        File midisave = new File(MainActivity.context.getFilesDir(), "save.mid");
         midi.writeToFile(midisave);
 
     }
