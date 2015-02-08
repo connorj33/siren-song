@@ -1,11 +1,7 @@
 package sirensong.com.sirensong;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -82,7 +78,7 @@ public class MidiMaker{
         for (long aData : data) {
             average += aData;
         }
-            return (double) (average / (data.length+1);
+            return (double) (average / (data.length+1));
     }
 
     public void midisheep() throws IOException {
