@@ -44,7 +44,7 @@ public class MidiMaker{
         int pitch;
         LinkedList<Long> durations = new LinkedList<>();
         int velocity = 100;
-        long baseTick = System.nanoTime();
+        long baseTick = System.currentTimeMillis();
 
 
         for (int i = 0; i < bessie.noteList.length; i++) {
@@ -52,7 +52,7 @@ public class MidiMaker{
                 for (int j = 0; j < bessie.noteList[i].times.size(); j++) {
                     pitch = bessie.noteList[i].getPitch();
                     if(!(bessie.noteList[i].durations.isEmpty())) {
-                        noteTrack.insertNote(channel, pitch, velocity,(System.nanoTime() - baseTick) , bessie.noteList[i].durations.element());
+                        noteTrack.insertNote(channel, pitch, velocity,(System.currentTimeMillis() - baseTick) , bessie.noteList[i].durations.element());
                         durations.add(bessie.noteList[i].durations.element());
                     }
                 }
