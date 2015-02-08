@@ -12,7 +12,7 @@ import java.util.LinkedList;
  */
 public class PeakFinder {
 
-    double posThresh = 40000000;
+    double posThresh =  20000000;
     double negThresh = -20000000;
 
     int peakLeft = -1;
@@ -50,19 +50,19 @@ public class PeakFinder {
             }
         }
 
-        try {
-            File notes = new File(MainActivity.context.getFilesDir(), "export.csv");
-            FileWriter noteWriter = new FileWriter(notes);
-            for (int i = 0; i < fft.length; i++) {
-                noteWriter.append(i + ",");
-                noteWriter.append(Double.toString(fft[i].abs()));
-                noteWriter.append("\n");
-            }
-            noteWriter.append('\n');
-            noteWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            File notes = new File(MainActivity.context.getFilesDir(), "export.csv");
+//            FileWriter noteWriter = new FileWriter(notes);
+//            for (int i = 0; i < fft.length; i++) {
+//                noteWriter.append(i + ",");
+//                noteWriter.append(Double.toString(fft[i].abs()));
+//                noteWriter.append("\n");
+//            }
+//            noteWriter.append('\n');
+//            noteWriter.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return peaks.toArray(new Integer[0]);
     }
