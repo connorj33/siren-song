@@ -1,6 +1,7 @@
 package sirensong.com.sirensong;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Created by test on 2/7/2015.
@@ -54,30 +55,53 @@ public class Sheep implements Runnable {
 
         //get rid of gaps first:
         for (Note n: noteList) {
-            Iterator<Long> iter1 = n.times.iterator();
-            Iterator<Long> iter2 = n.durations.iterator();
+            int counter = 1;
+
+            while (counter != 0) { //do this procedure until there are no more gaps to close.
+                counter = 0;
+                Iterator<Long> iter1 = n.times.iterator();
+                //Iterator<Long> iter2 = n.durations.iterator();
 
 
-            Long currentBegin;
-            Long currentEnd;
-            Long nextBegin;
+                Long currentBegin;
+                Long currentEnd;
+                Long nextBegin;
+                LinkedList<Long> newTimes = new LinkedList<>();
+                LinkedList<Long> newDurations = new LinkedList<>();
 
-            if (iter1.hasNext()) {
                 currentBegin = iter1.next();
-                currentEnd = iter1.next();
-                if (iter1.hasNext()) {
-                    nextBegin = iter1.next();
+
+                while (iter1.hasNext()) { //get the two currents and the next start time, copy current begin
+                    newTimes.add(currentBegin);
+                    currentEnd = iter1.next();
+                    if (iter1.hasNext()) {
+                        nextBegin = iter1.next();
+                    } else {
+                        continue;
+                    }
+                    if (nextBegin - currentEnd < gapMinLength) {
+                        counter++; //we closed a gap
+                        //in this case, do not copy currentEnd or nextBegin.
+                        //skip them, copy over the next end time
+                        Long nextEnd = iter1.next();
+                        newTimes.add(nextEnd);
+                        //calculate a new duration, add it to newDurations
+                        newDurations.add(nextEnd - currentBegin);
+                        if (iter1.hasNext()) { //set up for next iteration or exit if this is the end.
+                            currentBegin = iter1.next();
+                        } else {
+                            break;
+                        }
+                    } else {
+                        //copy it all over, prepare for another iteration
+                        newTimes.add(currentEnd);
+                        newDurations.add(currentEnd - currentBegin);
+                        currentBegin = nextBegin;
+                    }
                 }
-                else {
-                    continue;
-                }
-                if (nextBegin - currentEnd < gapMinLength) {
-                    
-                }
+                n.times = newTimes;
+                n.durations = newDurations;
             }
-
-
-
         }
 
         //next, a pass to get rid of transient notes:
