@@ -8,6 +8,9 @@ import android.util.Log;
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -112,6 +115,20 @@ public class GatherNotes extends Thread {
             intermediate = transformer.transform(dArray, TransformType.FORWARD);
             PeakFinder finder = new PeakFinder();
             Integer[] found = finder.findPeaks(intermediate);
+            try {
+                File notes = new File(MainActivity.context.getFilesDir(), "notes.txt");
+                FileWriter noteWriter = new FileWriter(notes);
+                for (int i = 0; i < found.length; i++) {
+                    noteWriter.append(found[i].toString());
+                    noteWriter.append("\n");
+                }
+                noteWriter.append('\n');
+                noteWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             Freq temp = new Freq();
             temp.peaks = found;
             temp.fftResults = intermediate;
