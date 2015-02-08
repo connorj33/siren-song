@@ -6,7 +6,7 @@ package sirensong.com.sirensong;
 public class Sheep implements Runnable {
     long startTime;
     GatherNotes gather;
-    Note[] noteList;
+    Note[] noteList = new Note[88];
 
     Sheep(long startTime, GatherNotes gather) {
         this.startTime = startTime;
