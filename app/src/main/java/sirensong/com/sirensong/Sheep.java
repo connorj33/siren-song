@@ -8,6 +8,7 @@ public class Sheep implements Runnable {
     GatherNotes gather;
     Note[] noteList = new Note[88];
 
+
     Sheep(long startTime, GatherNotes gather) {
         this.startTime = startTime;
         this.gather = gather;
@@ -15,6 +16,9 @@ public class Sheep implements Runnable {
 
     @Override
     public void run() {
+        for(int i = 0; i < noteList.length; i++){
+            noteList[i] = new Note((int)27.5 *((2^(1/12))^i));
+        }
         Freq currentFreq;
         while (true) {
             currentFreq = gather.deQueueFreq();
