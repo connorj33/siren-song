@@ -49,11 +49,13 @@ public class MidiMaker{
 
         for (int i = 0; i < bessie.noteList.length; i++) {
             try {
-                for (int j = 0; j < bessie.noteList[i].times.size(); j++) {
+                for (int j = 0; j < bessie.noteList[i].durations.size(); j++) {
                     pitch = bessie.noteList[i].getPitch();
                     if(!(bessie.noteList[i].durations.isEmpty())) {
-                        noteTrack.insertNote(channel, pitch, velocity, (System.currentTimeMillis()-baseTick)*300, bessie.noteList[i].durations.element());
-                        durations.add(bessie.noteList[i].durations.element());
+                        noteTrack.insertNote(channel, pitch, velocity, (long) (60000 / (tempo.getBpm()) / 500), bessie.noteList[i].durations.get(j) * 50000);
+                        /*                        noteTrack.insertNote(channel, pitch, velocity, (int) (bessie.startTime - bessie.noteList[i].times.get(j)), bessie.noteList[i].durations.get(j));
+*/
+                        durations.add(bessie.noteList[i].durations.get(j));
                     }
                 }
             }

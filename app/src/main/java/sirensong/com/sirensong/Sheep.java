@@ -54,7 +54,7 @@ public class Sheep implements Runnable {
             }
         }
         //following the loop, sheep has one last task: getting rid of transient notes and gaps in noteList.
-        //clean(noteList);
+        clean(noteList);
         try {
             new MidiMaker(this).makeMidi();
         } catch (IOException e) {

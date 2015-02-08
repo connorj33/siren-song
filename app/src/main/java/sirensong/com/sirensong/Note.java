@@ -1,6 +1,7 @@
 package sirensong.com.sirensong;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -9,9 +10,9 @@ import java.util.Queue;
 public class Note {
     private int pitch;
 
-    Queue<Long> times = new LinkedList<Long>() {
+    List<Long> times = new LinkedList<Long>() {
     };
-    Queue<Long> durations = new LinkedList<>();
+    List<Long> durations = new LinkedList<>();
 
     Note(int pitch){
         this.pitch = pitch;
@@ -24,7 +25,7 @@ public class Note {
     public void setTime(long time){
         times.add(time);
         if(times.size() % 2 == 0) {
-            durations.add(time-times.peek());
+            durations.add(time-times.get(times.size() -1));
         }
     }
 }
