@@ -15,8 +15,8 @@ import com.leff.midi.event.meta.TimeSignature;
  */
 public class MidiMaker{
     Sheep bessie;
-    public MidiMaker(long startTime, GatherNotes gather, Sheep bessie) throws IOException {
-
+    public MidiMaker(Sheep bessie) throws IOException {
+        this.bessie = bessie;
     }
 
     LinkedList<Long> durations = extractAndMidifyNotes();
