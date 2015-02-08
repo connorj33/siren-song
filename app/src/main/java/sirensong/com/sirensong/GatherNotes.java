@@ -102,9 +102,11 @@ public class GatherNotes extends Thread {
     private class Worker implements Runnable {
 
         double[] dArray;
+        long timeStamp;
 
-        public Worker(double[] array, long timestamp) {
+        public Worker(double[] array, long timeStamp) {
             dArray = array;
+            this.timeStamp = timeStamp;
         }
 
         @Override
@@ -131,6 +133,7 @@ public class GatherNotes extends Thread {
             Freq temp = new Freq();
             temp.peaks = found;
             temp.fftResults = intermediate;
+            temp.timeStamp = timeStamp;
             queueFreq(temp);
 
 //            if (found.length > 0) {
