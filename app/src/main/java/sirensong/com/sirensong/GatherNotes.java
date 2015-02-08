@@ -55,7 +55,7 @@ public class GatherNotes extends Thread {
         int nextToFillIndex = 0;
 
         //start Connor's consumer thread
-        new Thread(new MidiMaker(startTime, this)).start();
+        new Thread(new Sheep(startTime, this)).start();
 
         while (audioRecorder.read(readBuffer, 0, readBuffer.length) > 0) {
             System.arraycopy(readBuffer, 0, processBuffer, nextToFillIndex * READ_BUFFER_SIZE,
@@ -135,11 +135,6 @@ public class GatherNotes extends Thread {
             temp.fftResults = intermediate;
             temp.timeStamp = timeStamp;
             queueFreq(temp);
-
-//            if (found.length > 0) {
-//                Log.v("Frequencies", found.toString());
-//
-//            }
         }
     }
 }
