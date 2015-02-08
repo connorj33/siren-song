@@ -1,22 +1,24 @@
 package sirensong.com.sirensong;
 
+import android.util.Log;
+
 /**
  * Created by Connor on 2/7/15.
  */
 public class FrequencyToNotes {
 
-    public int[] oldFrequencies ={0};
+    public int[] oldFrequencies = {0};
 
 
-    public static int[] hertzify(Integer[] input){
+    public static int[] hertzify(Integer[] input) {
         int[] ret_array = new int[input.length];
-        for(int i = 0; i < input.length; i ++){
-            ret_array[i] = (int)(input[i]/2.05);
+        for (int i = 0; i < input.length; i++) {
+            ret_array[i] = (int) (input[i] / 2.05);
         }
         return ret_array;
     }
 
-    public void holdover(int[] oldFrequencies){
+    public void holdover(int[] oldFrequencies) {
         this.oldFrequencies = oldFrequencies;
     }
 
@@ -39,20 +41,19 @@ public class FrequencyToNotes {
                 octave++;
 
             }
-        int note = octave*12 + notesPastA;
+            int note = octave * 12 + notesPastA;
 
-        for(int i = 0; i < oldFrequency.length; i++){
-            if(oldFrequency[i] != frequency){
-                if(noteList[note] != null){
-                    noteList[note] = new Note(note);
-                }
-                noteList[note].setTime(time1);
+            for (int i = 0; i < oldFrequency.length; i++) {
+                if (oldFrequency[i] != frequency) {
+                    if(note < 88) {
+                        noteList[note].setTime(time1);
+                    }
                 }
             }
+            Log.v(note +" ", ", "+ time1);
+
+            //search for note based on id number, then add start if possible, add starting to time to list
         }
 
-
-        //search for note based on id number, then add start if possible, add starting to time to list
     }
-
 }
