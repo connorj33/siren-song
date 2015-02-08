@@ -1,7 +1,5 @@
 package sirensong.com.sirensong;
 
-import java.util.ArrayList;
-
 /**
  * Created by Connor on 2/7/15.
  */
@@ -12,7 +10,7 @@ public class FrequencyToNotes {
 
     public static int[] hertzify(Integer[] input){
         int[] ret_array = new int[input.length];
-        for(int i = 0; i < 0; i ++){
+        for(int i = 0; i < input.length; i ++){
             ret_array[i] = (int)(input[i]/2.05);
         }
         return ret_array;

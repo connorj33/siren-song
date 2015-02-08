@@ -1,18 +1,13 @@
 package sirensong.com.sirensong;
 
-import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Handler;
 import android.util.Log;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
