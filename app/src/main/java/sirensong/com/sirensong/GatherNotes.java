@@ -23,7 +23,7 @@ public class GatherNotes extends Thread {
 
     private FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
     //public double currentFrequency = 0.0;
-    private static final int SAMPLE_RATE = 44100; //16000; //44100;
+    private static final int SAMPLE_RATE = 16000; //44100;
     private static final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
     private static final int READ_BUFFER_SIZE = 16 * 1024;
@@ -103,9 +103,11 @@ public class GatherNotes extends Thread {
     private class Worker implements Runnable {
 
         double[] dArray;
+        long timeStamp;
 
-        public Worker(double[] array, long timestamp) {
+        public Worker(double[] array, long timeStamp) {
             dArray = array;
+            this.timeStamp = timeStamp;
         }
 
         @Override
@@ -132,6 +134,7 @@ public class GatherNotes extends Thread {
             Freq temp = new Freq();
             temp.peaks = found;
             temp.fftResults = intermediate;
+            temp.timeStamp = timeStamp;
             queueFreq(temp);
 
 //            if (found.length > 0) {

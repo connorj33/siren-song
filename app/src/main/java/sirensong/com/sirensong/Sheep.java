@@ -37,13 +37,9 @@ public class Sheep implements Runnable {
                 FrequencyToNotes ftn = new FrequencyToNotes();
                 int[] newArray = ftn.hertzify(currentFreq.peaks);
                 for(int i = 0; i < newArray.length; i++){
-                    ftn.getNote(newArray[i],currentFreq.timeStamp,noteList, ftn.oldFrequencies );
+                    ftn.getNote(newArray[i],currentFreq.timeStamp,noteList, ftn.oldFrequencies, 4);
                 }
                 ftn.holdover(ftn.oldFrequencies);
-                //TODO YOUR CODE HERE (possibly in another thread?)
-
-
-
             }
         }
     }

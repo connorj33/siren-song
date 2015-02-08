@@ -13,24 +13,6 @@ public class FrequencyToNotes {
     public ArrayList<Integer> tones;
 
     public int[] hertzify(Integer[] input) {
-//        int tones_count = 0;
-//        int[] ret_array = new int[input.length];
-//        for (int i = 0; i < input.length; i++) {
-//            ret_array[i] = (int) (input[i] / 2.05);
-//
-//        }
-//        tones = new ArrayList<>();
-//        for(int i = ret_array.length; i > 0; i --){
-//            for(int j = ret_array.length-i; j > i; j --){
-//                if(!(ret_array[i] > ret_array[j]*.95 / 3 && ret_array[i] < ret_array[j]* 1.05 / 3)){
-//                    tones.set(tones_count, ret_array[i]);
-//                    tones_count ++;
-//                }
-//            }
-//        }
-//        return tones.toArray(new Integer[0]);
-
-
         // new requirements: must filter out overtones, but cannot take away all peaks.
         // Should take away roughly half if it is working well
 
@@ -49,7 +31,6 @@ public class FrequencyToNotes {
                 }
             }
         }
-
         int[] newArray = new int[number];
         int j = 0;
         for (int i = 0; i < input.length; i++) {
@@ -57,8 +38,6 @@ public class FrequencyToNotes {
                 newArray[j++] = (int)(input[i] / 2.05);
             }
         }
-
-
         return newArray;
     }
 
@@ -70,18 +49,18 @@ public class FrequencyToNotes {
         this.oldFrequencies = oldFrequencies;
     }
 
-    public static void getNote(int frequency, long time, Note[] noteList, int[] oldFrequency) {
+    public static void getNote(int frequency, long time, Note[] noteList, int[] oldFrequency, int octave) {
         Log.v("getNote", "working on identifying frequency " + frequency);
 
 
-        int octave = 4;                                 //Beginning note in the search is A440, which is in octave 4
+//        int octave = 4;                                 //Beginning note in the search is A440, which is in octave 4
         if (frequency >= 856) {                           //If the note is out of the octave, we shift calculations
             octave++;
-            getNote(frequency / 2, time, noteList, oldFrequency);
+            getNote(frequency / 2, time, noteList, oldFrequency, octave);
             return;
         } else if (frequency < 428) {                        //Same as adding an octave, but if the note is too low
             octave--;
-            getNote(frequency * 2, time, noteList, oldFrequency);
+            getNote(frequency * 2, time, noteList, oldFrequency, octave);
             return;
         }
         double curr_freq = 428;                         //Starting pitch
