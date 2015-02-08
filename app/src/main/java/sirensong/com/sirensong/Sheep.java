@@ -22,7 +22,7 @@ public class Sheep implements Runnable {
     @Override
     public void run() {
         for(int i = 0; i < noteList.length; i++){
-            noteList[i] = new Note((int)(27.5 *((Math.pow(2,Math.pow((1/12),i))))));
+            noteList[i] = new Note(i);
         }
         Freq currentFreq;
         while (true) {
