@@ -12,8 +12,7 @@ import java.util.LinkedList;
  */
 public class PeakFinder {
 
-    double posThresh =  20000000;
-    double negThresh = -20000000;
+    double posThresh =  25000000;
 
     int peakLeft = -1;
     int peakRight = -1;
@@ -21,10 +20,11 @@ public class PeakFinder {
     int fuzzer = 75;
 
     int HighPass = 170; //no peaks below this allowed. There is no reason to need them.
+    int LowPass = 8589;
 
     public Integer[] findPeaks(Complex[] fft) {
         LinkedList<Integer> peaks = new LinkedList<>();
-        for (int i = HighPass; i < fft.length /2; i++) {
+        for (int i = HighPass; i < LowPass; i++) {
             if (fft[i].abs() > posThresh ) {
                 if (peakLeft == -1) { //not already detecting a peak, start detecting one
                     peakLeft = i;

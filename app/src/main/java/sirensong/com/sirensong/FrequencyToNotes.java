@@ -78,9 +78,11 @@ public class FrequencyToNotes {
         if (frequency >= 856) {                           //If the note is out of the octave, we shift calculations
             octave++;
             getNote(frequency / 2, time, noteList, oldFrequency);
+            return;
         } else if (frequency < 428) {                        //Same as adding an octave, but if the note is too low
             octave--;
             getNote(frequency * 2, time, noteList, oldFrequency);
+            return;
         }
         double curr_freq = 428;                         //Starting pitch
         int notesPastA = 0;
@@ -92,10 +94,6 @@ public class FrequencyToNotes {
                 octave++;
 
             }
-
-
-
-            //search for note based on id number, then add start if possible, add starting to time to list
         }
 
         int note = octave * 12 + notesPastA;
@@ -107,6 +105,7 @@ public class FrequencyToNotes {
                 }
             }
         }
+        //search for note based on id number, then add start if possible, add starting to time to list
 
         Log.v(note +" ", ", "+ time);
 
