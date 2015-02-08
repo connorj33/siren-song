@@ -17,9 +17,10 @@ public class MidiMaker{
     Sheep bessie;
     public MidiMaker(Sheep bessie) throws IOException {
         this.bessie = bessie;
+        durations = extractAndMidifyNotes();
     }
 
-    LinkedList<Long> durations = extractAndMidifyNotes();
+    LinkedList<Long> durations;
     MidiTrack tempoTrack = new MidiTrack();
     MidiTrack noteTrack = new MidiTrack();
     TimeSignature signature = new TimeSignature(0 ,0 , 4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);

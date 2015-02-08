@@ -41,14 +41,20 @@ public class Sheep implements Runnable {
             else {
                 FrequencyToNotes ftn = new FrequencyToNotes();
                 int[] newArray = ftn.hertzify(currentFreq.peaks);
-                for (int aNewArray : newArray) {
-                    FrequencyToNotes.getNote(aNewArray, currentFreq.timeStamp, noteList, ftn.oldFrequencies, 4);
+                for (int i = 0; i < newArray.length; i ++) { //aNewArray : newArray) {
+                    newArray[i] = FrequencyToNotes.getNote(newArray[i], currentFreq.timeStamp, noteList, ftn.oldFrequencies, 4);
                 }
-                ftn.holdover(ftn.oldFrequencies);
+                for (int oldFreq: ftn.oldFrequencies) {
+                    if (oldFreq != -1) {
+                        //this one was not continued, add an end time
+                        noteList[oldFreq].setTime(currentFreq.getTimeStamp());
+                    }
+                }
+                ftn.holdover(newArray);
             }
         }
         //following the loop, sheep has one last task: getting rid of transient notes and gaps in noteList.
-        clean(noteList);
+        //clean(noteList);
         try {
             new MidiMaker(this).makeMidi();
         } catch (IOException e) {
@@ -76,7 +82,12 @@ public class Sheep implements Runnable {
                 LinkedList<Long> newTimes = new LinkedList<>();
                 LinkedList<Long> newDurations = new LinkedList<>();
 
-                currentBegin = iter1.next();
+                if (iter1.hasNext()) {
+                    currentBegin = iter1.next();
+                }
+                else {
+                    break;
+                }
 
                 while (iter1.hasNext()) { //get the two currents and the next start time, copy current begin
                     newTimes.add(currentBegin);
