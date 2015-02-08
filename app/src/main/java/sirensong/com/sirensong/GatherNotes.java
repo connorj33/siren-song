@@ -135,11 +135,6 @@ public class GatherNotes extends Thread {
             temp.fftResults = intermediate;
             temp.timeStamp = timeStamp;
             queueFreq(temp);
-
-//            if (found.length > 0) {
-//                Log.v("Frequencies", found.toString());
-//
-//            }
         }
     }
 }
